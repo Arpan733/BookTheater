@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "121103568032",
+    "project_id": "booktheater-e712f",
+    "storage_bucket": "booktheater-e712f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121103568032:android:52f58f5348d3b2d9ac4dc5",
+        "android_client_info": {
+          "package_name": "com.example.booktheater"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121103568032-ho7b4kpolfet8iqaed48240a42kisbtj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkSV3KBZ8weLQENTEB__Z6GtolTNxaUVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121103568032-ho7b4kpolfet8iqaed48240a42kisbtj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
