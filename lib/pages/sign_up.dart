@@ -24,7 +24,8 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     return Scaffold(
       backgroundColor: Mytheme.splash,
@@ -52,8 +53,7 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(
                           fontSize: 35,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white
-                      ),
+                          color: Colors.white),
                     )
                   ],
                 ),
@@ -165,14 +165,21 @@ class _SignUpState extends State<SignUp> {
                             backgroundColor: Mytheme.splash,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
-                            )
-                        ),
+                            )),
                         onPressed: () async {
-                          if(InputValidator.validateField("Name", nameController.text.trim()) &&
-                          InputValidator.validateField("Email", emailController.text.trim()) &&
-                          InputValidator.validateField("Password", passwordController.text.trim())) {
-                            if(InputValidator.validatePassword(passwordController.text.trim(), cnfpasswordController.text.trim())) {
-                              AuthController.instance.registerUser(emailController.text.trim(), passwordController.text.trim());
+                          if (InputValidator.validateField(
+                                  "Name", nameController.text.trim()) &&
+                              InputValidator.validateField(
+                                  "Email", emailController.text.trim()) &&
+                              InputValidator.validateField(
+                                  "Password", passwordController.text.trim())) {
+                            if (InputValidator.validatePassword(
+                                passwordController.text.trim(),
+                                cnfpasswordController.text.trim())) {
+                              AuthController.instance.registerUser(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim(),
+                                  nameController.text.trim());
                             }
                           }
                         },
@@ -200,9 +207,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Text(
-                                "Or"
-                              ),
+                              child: Text("Or"),
                             ),
                             Expanded(
                               child: Divider(
@@ -215,7 +220,8 @@ class _SignUpState extends State<SignUp> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: SocialLoginButtons(onGoogleClick: () {}, onFacebookClick: () {}),
+                        child: SocialLoginButtons(
+                            onGoogleClick: () {}, onFacebookClick: () {}),
                       ),
                     ],
                   ),
@@ -229,24 +235,22 @@ class _SignUpState extends State<SignUp> {
                             text: "Already have an account? ",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
-                            )
-                        ),
+                            )),
                         TextSpan(
                           text: "Login",
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
                             fontWeight: FontWeight.w700,
                           ),
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                            // Navigator.pop(context);
-                            Get.back();
-                          },
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              // Navigator.pop(context);
+                              Get.back();
+                            },
                         ),
                         const TextSpan(
                           text: " here.",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.w700),
                         )
                       ],
                     ),
@@ -260,4 +264,3 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
-

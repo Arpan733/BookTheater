@@ -1,13 +1,15 @@
 import 'package:booktheater/controllers/auth_controller.dart';
+import 'package:booktheater/pages/profile_screen.dart';
 import 'package:booktheater/utils/constants.dart';
 import 'package:booktheater/utils/custom_slider.dart';
+import 'package:booktheater/utils/dummy_data.dart';
 import 'package:booktheater/utils/menu_item.dart';
 import 'package:booktheater/utils/movies_item.dart';
 import 'package:booktheater/utils/mytheme.dart';
-import 'package:booktheater/utils/dummy_data.dart';
 import 'package:booktheater/utils/play_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../utils/event_item.dart';
 
@@ -23,7 +25,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Mytheme.statusBarColor));
+    print("User: ${AuthController.instance.user}");
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Mytheme.statusBarColor));
 
     final Size size = MediaQuery.of(context).size;
 
@@ -37,20 +41,25 @@ class _HomePageState extends State<HomePage> {
           child: AppBar(
             leading: Padding(
               padding: const EdgeInsets.only(top: 8, left: 8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Image.network(
-                  PicUrl,
-                  fit: BoxFit.cover,
-                  width: 60,
-                  height: 60,
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(() => const ProfileScreen());
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.network(
+                    PicUrl,
+                    fit: BoxFit.cover,
+                    width: 60,
+                    height: 60,
+                  ),
                 ),
               ),
             ),
             title: Column(
               children: [
-                const Text(
-                  "Name",
+                Text(
+                  AuthController.instance.user?.displayName ?? "Name",
                 ),
                 DropdownButton(
                   value: city,
@@ -63,7 +72,9 @@ class _HomePageState extends State<HomePage> {
                     Icons.keyboard_arrow_down,
                     color: Colors.white.withOpacity(0.7),
                   ),
-                  items: cities.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                  items: cities
+                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                      .toList(),
                   onChanged: (st) {
                     setState(() {
                       city = st!;
@@ -74,15 +85,11 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: [
               IconButton(
-                icon: Image.asset(
-                  "assets/images/Search.png"
-                ),
+                icon: Image.asset("assets/images/Search.png"),
                 onPressed: () {},
               ),
               IconButton(
-                icon: Image.asset(
-                  "assets/images/Notification.png"
-                ),
+                icon: Image.asset("assets/images/Notification.png"),
                 onPressed: () {},
               )
             ],
@@ -245,4 +252,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

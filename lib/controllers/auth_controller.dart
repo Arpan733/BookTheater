@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:booktheater/pages/home_page.dart';
 import 'package:booktheater/utils/mytheme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,14 +14,15 @@ import '../pages/login_screen.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<User?> _user;
+
   User? get user => _user.value;
   bool isLoging = false;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  
+
   @override
   void onReady() {
     super.onReady();
-    
+
     _user = Rx<User?>(auth.currentUser);
     _user.bindStream(auth.authStateChanges());
     ever(_user, loginRedirect);
@@ -30,7 +30,7 @@ class AuthController extends GetxController {
 
   loginRedirect(User? user) {
     Timer(Duration(seconds: isLoging ? 0 : 2), () {
-      if(user == null) {
+      if (user == null) {
         isLoging = false;
         update();
         Get.offAll(() => const LoginScreen());
@@ -42,7 +42,7 @@ class AuthController extends GetxController {
     });
   }
 
-  void login (email, password) async {
+  void login(email, password) async {
     try {
       isLoging = true;
       update();
@@ -53,11 +53,13 @@ class AuthController extends GetxController {
     }
   }
 
-  void registerUser (email, password) async {
+  void registerUser(email, password, name) async {
     try {
       isLoging = true;
       update();
-      await auth.createUserWithEmailAndPassword(email: email, password: password);
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      user?.updateDisplayName(name);
     } on FirebaseAuthException catch (e) {
       getErrorSnackBar("Account Creating Failed", e);
     }
@@ -71,15 +73,15 @@ class AuthController extends GetxController {
 
     try {
       googleSignIn.disconnect();
-    } catch (e) {
-
-    }
+    } catch (e) {}
 
     try {
-      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
 
-      if(googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
         final credentials = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken,
