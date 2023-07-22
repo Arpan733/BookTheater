@@ -136,6 +136,38 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  geocoding:
+    dependency: "direct main"
+    description:
+      name: geocoding
+      sha256: b34c0501bbbaf3190b85bef3078b27cf66c28a8915c6d3af50d67f356aa7da31
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  geocoding_android:
+    dependency: transitive
+    description:
+      name: geocoding_android
+      sha256: "609db1d71bc364dd9d0616f72a41c01e0c74f3a3807efb85e0d5a67e57baf50f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
+  geocoding_ios:
+    dependency: transitive
+    description:
+      name: geocoding_ios
+      sha256: c85495ce8fb34e4fbd2dd8fc5f79263d622d9f88c4af948c965daf6b27a7f3a1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  geocoding_platform_interface:
+    dependency: transitive
+    description:
+      name: geocoding_platform_interface
+      sha256: "8848605d307d844d89937cdb4b8ad7dfa880552078f310fa24d8a460f6dddab4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   get:
     dependency: "direct main"
     description:
@@ -224,6 +256,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  loading_overlay:
+    dependency: "direct main"
+    description:
+      name: loading_overlay
+      sha256: a4dd5a790e0d60568d4c684e46eed00de883db0dc660f90ffd583aca8f4a1d91
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
+  location:
+    dependency: "direct main"
+    description:
+      name: location
+      sha256: "153c5d779e3bfe293ba326105522ab3e3971f11390b32c7e4dce804aa23655dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
+  location_platform_interface:
+    dependency: transitive
+    description:
+      name: location_platform_interface
+      sha256: "7ef30443cffadad54d534dfd370fe126bc087655aaa53f181570b9812a87a806"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  location_web:
+    dependency: transitive
+    description:
+      name: location_web
+      sha256: "00624210b3461976d868471b3e136886a0e166eebe09db636e7d0a4057648fbb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   matcher:
     dependency: transitive
     description:

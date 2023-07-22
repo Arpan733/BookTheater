@@ -39,6 +39,9 @@ dependencies:
   firebase_auth: ^4.7.1
   get: ^4.6.5
   google_sign_in: 6.1.4
+  location: ^5.0.0
+  geocoding: ^2.1.0
+  loading_overlay: ^0.3.0
 #  google_maps_flutter: ^2.3.1
 #  google_maps_flutter_android: ^2.4.15
 

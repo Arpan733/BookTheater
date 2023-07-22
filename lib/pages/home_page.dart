@@ -1,5 +1,7 @@
 import 'package:booktheater/controllers/auth_controller.dart';
+import 'package:booktheater/controllers/location_controller.dart';
 import 'package:booktheater/pages/profile_screen.dart';
+import 'package:booktheater/pages/select_location_screen.dart';
 import 'package:booktheater/utils/constants.dart';
 import 'package:booktheater/utils/custom_slider.dart';
 import 'package:booktheater/utils/dummy_data.dart';
@@ -56,42 +58,83 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            title: Column(
-              children: [
-                Text(
-                  AuthController.instance.user?.displayName ?? "Name",
-                ),
-                DropdownButton(
-                  value: city,
-                  isDense: true,
-                  dropdownColor: Mytheme.statusBarColor,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AuthController.instance.user?.displayName ?? "Name",
                   ),
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.white.withOpacity(0.7),
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () => Get.to(() => const SelectLocationScreen()),
+                      child: Row(
+                        children: [
+                          Text(
+                            LocationController.instance.city.value,
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.7),
+                              fontSize: 14,
+                              inherit: true,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white.withOpacity(0.7),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  items: cities
-                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                      .toList(),
-                  onChanged: (st) {
-                    setState(() {
-                      city = st!;
-                    });
-                  },
-                )
-              ],
+                  // DropdownButton(
+                  //   value: city,
+                  //   isDense: true,
+                  //   dropdownColor: Mytheme.statusBarColor,
+                  //   style: TextStyle(
+                  //     color: Colors.white.withOpacity(0.7),
+                  //   ),
+                  //   icon: Icon(
+                  //     Icons.keyboard_arrow_down,
+                  //     color: Colors.white.withOpacity(0.7),
+                  //   ),
+                  //   items: cities
+                  //       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                  //       .toList(),
+                  //   onChanged: (st) {
+                  //     setState(() {
+                  //       city = st!;
+                  //     });
+                  //   },
+                  // )
+                ],
+              ),
             ),
             actions: [
-              IconButton(
-                icon: Image.asset("assets/images/Search.png"),
-                onPressed: () {},
+              Padding(
+                padding: const EdgeInsets.only(top: 10, right: 10),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        "assets/images/Search.png",
+                        height: 25,
+                      ),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Image.asset(
+                        "assets/images/Notification.png",
+                        height: 25,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
-              IconButton(
-                icon: Image.asset("assets/images/Notification.png"),
-                onPressed: () {},
-              )
             ],
           ),
         ),
@@ -125,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const MenuItem(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 10),
+                  padding: const EdgeInsets.only(left: 20, bottom: 5),
                   child: Text(
                     "RECOMMENDED CATEGORIES",
                     style: TextStyle(
