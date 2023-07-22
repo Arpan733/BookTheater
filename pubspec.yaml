@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^4.7.1
   get: ^4.6.5
   google_sign_in: 6.1.4
+#  google_maps_flutter: ^2.3.1
+#  google_maps_flutter_android: ^2.4.15
 
 dev_dependencies:
   flutter_test:
@@ -68,9 +70,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
-    - assets/images/Logo.png
-    - assets/images/Google.png
-    - assets/images/Facebook.png
+    - assets/images/
+    - assets/movies/
+    - assets/events/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

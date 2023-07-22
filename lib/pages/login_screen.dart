@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final forgotemailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +139,51 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.defaultDialog(
+                              title: "Forgot Password?",
+                              content: TextFormField(
+                                controller: forgotemailController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  hintText: "Email address",
+                                  hintStyle: const TextStyle(
+                                    color: Colors.black54,
+                                  ),
+                                  fillColor: Mytheme.greyColor,
+                                  filled: true,
+                                ),
+                              ),
+                              radius: 10,
+                              onWillPop: () {
+                                forgotemailController.text = "";
+
+                                return Future.value(true);
+                              },
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              confirm: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Mytheme.splash,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    )
+                                ),
+                                onPressed: () => AuthController.instance.forgotPassword(forgotemailController.text.trim()),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Text(
+                                    "Send Reset Mail",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                           child: const Text(
                             "Forgot Password?",
                             style: TextStyle(

@@ -15,6 +15,7 @@ import '../pages/login_screen.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<User?> _user;
+  User? get user => _user.value;
   bool isLoging = false;
   final FirebaseAuth auth = FirebaseAuth.instance;
   
@@ -91,12 +92,33 @@ class AuthController extends GetxController {
     }
   }
 
+  void forgotPassword(email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      getSuccessorSnackBar("Reset mail sent successfully. Check mail!");
+    } on FirebaseAuthException catch (e) {
+      getErrorSnackBar("Error", e);
+    }
+  }
+
   getErrorSnackBar(String message, _) {
     Get.snackbar(
       "Error",
       "$message\n${_.message}",
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Mytheme.redBorder,
+      colorText: Colors.white,
+      borderRadius: 10,
+      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+    );
+  }
+
+  getSuccessorSnackBar(String message) {
+    Get.snackbar(
+      "Success",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Mytheme.greenTextColor,
       colorText: Colors.white,
       borderRadius: 10,
       margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
