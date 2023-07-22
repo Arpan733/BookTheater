@@ -14,15 +14,28 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final mobileController = TextEditingController();
+
+  late AnimationController _animationController;
+  late Animation<Offset> _animationImage, _animationCamara;
 
   @override
   void initState() {
     Get.put(ProfileController());
     super.initState();
+
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 600));
+    _animationImage =
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -0.4))
+            .animate(_animationController);
+    _animationCamara =
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -1.1))
+            .animate(_animationController);
   }
 
   @override
@@ -53,24 +66,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: double.maxFinite,
         child: Stack(
           children: [
-            Container(
-              height: 150,
-              width: double.maxFinite,
-              decoration: const BoxDecoration(
-                  color: Mytheme.statusBarColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 200),
+            NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification.metrics.pixels ==
+                    notification.metrics.maxScrollExtent) {
+                  _animationController.forward();
+                } else if (notification.metrics.pixels ==
+                    notification.metrics.minScrollExtent * 0.5) {
+                  _animationController.reverse();
+                }
+
+                return true;
+              },
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      height: 150,
+                      width: double.maxFinite,
+                      decoration: const BoxDecoration(
+                        color: Mytheme.statusBarColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
-                      height: 10,
+                      height: 60,
                     ),
                     const Padding(
                       padding: EdgeInsets.only(left: 70),
@@ -127,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: TextFormField(
                         style: const TextStyle(color: Colors.black),
                         initialValue: email,
-                        readOnly: false,
+                        readOnly: true,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -247,6 +271,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       ),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -254,22 +281,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Positioned(
               top: 90,
               left: size.width * 0.5 - 60,
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 3,
+              child: SlideTransition(
+                position: _animationImage,
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(60),
+                      color: Mytheme.statusBarColor,
                     ),
-                    borderRadius: BorderRadius.circular(60),
-                    color: Mytheme.statusBarColor,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(60),
-                    child: Image.network(
-                      PicUrl,
-                      width: 120,
-                      height: 120,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(60),
+                      child: Image.network(
+                        PicUrl,
+                        width: 120,
+                        height: 120,
+                      ),
                     ),
                   ),
                 ),
@@ -278,16 +308,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Positioned(
               top: 170,
               left: size.width * 0.5 + 20,
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: Mytheme.statusBarColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: const Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
+              child: SlideTransition(
+                position: _animationCamara,
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Mytheme.statusBarColor,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
