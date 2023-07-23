@@ -1,3 +1,4 @@
+import 'package:booktheater/controllers/shared_pref.dart';
 import 'package:booktheater/utils/dummy_data.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:get/get.dart';
@@ -49,11 +50,12 @@ class LocationController extends GetxController {
     isLocating = false.obs;
 
     print(address[0].subLocality);
-    setCity(address[0].subLocality!);
+    setCity(address[0].subLocality! ?? cities[0]);
   }
 
-  setCity(String myCity) {
+  setCity(String myCity) async {
     city = myCity.obs;
+    await SharedPref.storeLocation(myCity);
     update();
   }
 }

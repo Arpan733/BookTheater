@@ -1,5 +1,6 @@
 import 'package:booktheater/controllers/auth_controller.dart';
 import 'package:booktheater/controllers/location_controller.dart';
+import 'package:booktheater/controllers/shared_pref.dart';
 import 'package:booktheater/pages/profile_screen.dart';
 import 'package:booktheater/pages/select_location_screen.dart';
 import 'package:booktheater/utils/constants.dart';
@@ -35,6 +36,13 @@ class _HomePageState extends State<HomePage> {
 
     String? PicUrl = AuthController.instance.user?.photoURL;
     PicUrl = PicUrl ?? Constants.dummyAvatar;
+
+    @override
+    void initState() {
+      SharedPref.getLocation().then((value) => city = value);
+
+      super.initState();
+    }
 
     return SafeArea(
       child: Scaffold(

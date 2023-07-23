@@ -46,129 +46,135 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "${menu.name} in ${LocationController.instance.city}",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return WillPopScope(
+      onWillPop: () {
+        CommonController.instance.tabController.animateTo(0);
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "${menu.name} in ${LocationController.instance.city}",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          elevation: 0,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                showSearch(
+                  context: context,
+                  delegate: MySearchDelegate(
+                    isMovie: menu.name.contains("Movies") ? true : false,
+                    list: list,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, bottom: 15, right: 15),
+                child: Image.asset(
+                  "assets/images/Search.png",
+                  height: 25,
+                ),
+              ),
+            )
+          ],
         ),
-        elevation: 0,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              showSearch(
-                context: context,
-                delegate: MySearchDelegate(
-                  isMovie: menu.name.contains("Movies") ? true : false,
-                  list: list,
-                ),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 15, right: 15),
-              child: Image.asset(
-                "assets/images/Search.png",
-                height: 25,
-              ),
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 1,
-            child: TabBar(
-              tabs: CommonController.instance.tabs,
-              controller: CommonController.instance.tabController,
-              indicator: const UnderlineTabIndicator(
-                borderSide: BorderSide(
-                  color: Mytheme.splash,
-                  width: 3,
-                ),
-                insets: EdgeInsets.all(15),
-              ),
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorWeight: 3,
-              labelStyle: selectedText,
-              unselectedLabelStyle: normalText,
-              labelColor: Mytheme.splash,
-              unselectedLabelColor: Colors.black45,
-              enableFeedback: false,
-              isScrollable: false,
-              onTap: (index) => CommonController.instance.updatePage(index),
-            ),
-          ),
-          // Expanded(
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(top: 20, bottom: 20),
-          //     child: ListView(
-          //       shrinkWrap: true,
-          //       scrollDirection: Axis.horizontal,
-          //       physics: const NeverScrollableScrollPhysics(),
-          //       children: tabList.map((index) {
-          //         int i = tabList.indexOf(index);
-          //         return GestureDetector(
-          //           onTap: () {
-          //             CommonController.instance.updatePage(i);
-          //           },
-          //           child: Obx(
-          //             () => Column(
-          //               children: [
-          //                 Text(
-          //                   index,
-          //                   style: i ==
-          //                           CommonController
-          //                               .instance.SelectedIndex.value
-          //                       ? selectedText
-          //                       : normalText,
-          //                 ),
-          //                 const SizedBox(
-          //                   height: 5,
-          //                 ),
-          //                 AnimatedContainer(
-          //                   duration: const Duration(milliseconds: 300),
-          //                   color: Mytheme.splash,
-          //                   width: i ==
-          //                           CommonController
-          //                               .instance.SelectedIndex.value
-          //                       ? 50
-          //                       : 0,
-          //                   height: 3,
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         );
-          //       }).toList(),
-          //     ),
-          //   ),
-          // ),
-          Expanded(
-            flex: 8,
-            child: PageView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: CommonController.instance.pagecontroller,
-              itemCount: 3,
-              itemBuilder: (_, index) => LayoutBuilder(
-                builder: (context, constraints) => GridView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: constraints.maxWidth > 480 ? 4 : 2,
-                    childAspectRatio: 1,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 1,
+              child: TabBar(
+                tabs: CommonController.instance.tabs,
+                controller: CommonController.instance.tabController,
+                indicator: const UnderlineTabIndicator(
+                  borderSide: BorderSide(
+                    color: Mytheme.splash,
+                    width: 3,
                   ),
-                  itemCount: list.length,
-                  itemBuilder: (_, i) => ItemBlock(
-                    model: list[i],
+                  insets: EdgeInsets.all(15),
+                ),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorWeight: 3,
+                labelStyle: selectedText,
+                unselectedLabelStyle: normalText,
+                labelColor: Mytheme.splash,
+                unselectedLabelColor: Colors.black45,
+                enableFeedback: false,
+                isScrollable: false,
+                onTap: (index) => CommonController.instance.updatePage(index),
+              ),
+            ),
+            // Expanded(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 20, bottom: 20),
+            //     child: ListView(
+            //       shrinkWrap: true,
+            //       scrollDirection: Axis.horizontal,
+            //       physics: const NeverScrollableScrollPhysics(),
+            //       children: tabList.map((index) {
+            //         int i = tabList.indexOf(index);
+            //         return GestureDetector(
+            //           onTap: () {
+            //             CommonController.instance.updatePage(i);
+            //           },
+            //           child: Obx(
+            //             () => Column(
+            //               children: [
+            //                 Text(
+            //                   index,
+            //                   style: i ==
+            //                           CommonController
+            //                               .instance.SelectedIndex.value
+            //                       ? selectedText
+            //                       : normalText,
+            //                 ),
+            //                 const SizedBox(
+            //                   height: 5,
+            //                 ),
+            //                 AnimatedContainer(
+            //                   duration: const Duration(milliseconds: 300),
+            //                   color: Mytheme.splash,
+            //                   width: i ==
+            //                           CommonController
+            //                               .instance.SelectedIndex.value
+            //                       ? 50
+            //                       : 0,
+            //                   height: 3,
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //         );
+            //       }).toList(),
+            //     ),
+            //   ),
+            // ),
+            Expanded(
+              flex: 8,
+              child: PageView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: CommonController.instance.pagecontroller,
+                itemCount: 3,
+                itemBuilder: (_, index) => LayoutBuilder(
+                  builder: (context, constraints) => GridView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: constraints.maxWidth > 480 ? 4 : 2,
+                      childAspectRatio: 1,
+                    ),
+                    itemCount: list.length,
+                    itemBuilder: (_, i) => ItemBlock(
+                      model: list[i],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
