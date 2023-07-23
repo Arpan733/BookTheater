@@ -89,23 +89,24 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                   myCurrentLoaction,
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: cities.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 2.3,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 15,
-                      ),
-                      itemBuilder: (_, index) => GestureDetector(
-                        onTap: () {
-                          LocationController.instance.setCity(cities[index]);
-                          Get.offAll(() => const HomePage());
-                        },
-                        child: suggestedLocation(cities[index]),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cities.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: constraints.maxWidth > 480 ? 5 : 3,
+                          childAspectRatio: 2.3,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                        ),
+                        itemBuilder: (_, index) => GestureDetector(
+                          onTap: () {
+                            LocationController.instance.setCity(cities[index]);
+                            Get.offAll(() => const HomePage());
+                          },
+                          child: suggestedLocation(cities[index]),
+                        ),
                       ),
                     ),
                   ),

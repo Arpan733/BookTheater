@@ -1,4 +1,6 @@
+import 'package:booktheater/pages/view_all_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dummy_data.dart';
 
@@ -19,7 +21,10 @@ class MenuItem extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                print(menus[i].name);
+                Get.to(() => const ViewAllScreen(), arguments: menus[i]);
+              },
               child: Column(
                 children: [
                   Padding(
@@ -49,4 +54,3 @@ class MenuItem extends StatelessWidget {
     );
   }
 }
-

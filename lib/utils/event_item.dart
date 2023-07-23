@@ -1,3 +1,4 @@
+import 'package:booktheater/widgets/item_block.dart';
 import 'package:flutter/material.dart';
 
 import 'dummy_data.dart';
@@ -16,45 +17,11 @@ class EventsItem extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: events.length,
         itemBuilder: (_, i) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
-            child: GestureDetector(
-              onTap: () {},
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      events[i].bannerUrl,
-                      height: 150,
-                      width: 100,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    events[i].title,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black.withOpacity(0.6),
-                    ),
-                  ),
-                  Text(
-                    events[i].description,
-                    style: const TextStyle(
-                      fontSize: 10,
-                    ),
-                  )
-                ],
-              ),
-            ),
+          return ItemBlock(
+            model: events[i],
           );
         },
       ),
     );
   }
 }
-
