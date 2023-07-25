@@ -159,17 +159,22 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                 itemCount: 3,
                 itemBuilder: (_, index) => LayoutBuilder(
                   builder: (context, constraints) => GridView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: constraints.maxWidth > 480 ? 4 : 2,
-                      childAspectRatio: 1,
-                    ),
-                    itemCount: list.length,
-                    itemBuilder: (_, i) => ItemBlock(
-                      model: list[i],
-                    ),
-                  ),
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: constraints.maxWidth > 480 ? 4 : 2,
+                        childAspectRatio: 1,
+                      ),
+                      itemCount: list.length,
+                      itemBuilder: (_, i) {
+                        return ItemBlock(
+                          model: list[i],
+                          height: 180,
+                          width: 150,
+                          isMovie: menu.name.toLowerCase().contains("Movies"),
+                          onTap: (model) {},
+                        );
+                      }),
                 ),
               ),
             ),
@@ -195,6 +200,7 @@ class MySearchDelegate extends SearchDelegate<String> {
       height: 180,
       width: 150,
       isMovie: isMovie,
+      onTap: (model) {},
     );
   }
 

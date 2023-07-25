@@ -19,6 +19,7 @@ class EventsItem extends StatelessWidget {
         itemBuilder: (_, i) {
           return ItemBlock(
             model: events[i],
+            onTap: (model) {},
           );
         },
       ),

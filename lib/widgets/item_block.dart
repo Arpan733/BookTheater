@@ -6,12 +6,15 @@ class ItemBlock extends StatelessWidget {
   final double height;
   final double width;
 
+  final Function(dynamic model) onTap;
+
   const ItemBlock({
     Key? key,
     required this.model,
     this.isMovie = false,
     this.height = 150,
     this.width = 120,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -20,7 +23,7 @@ class ItemBlock extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
       child: GestureDetector(
         onTap: () {
-          print(model.title);
+          onTap(model);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

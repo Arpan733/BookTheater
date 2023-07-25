@@ -1,7 +1,11 @@
 import 'package:booktheater/model/play_model.dart';
+import 'package:booktheater/utils/mytheme.dart';
+
+import '../model/crea_cast_model.dart';
 import '../model/event_model.dart';
 import '../model/menu_model.dart';
 import '../model/movie_model.dart';
+import '../model/offer_model.dart';
 
 List<String> cities = [
   "Surat",
@@ -22,7 +26,7 @@ List<MenuModel> menus = [
 ];
 
 List<MovieModel> movies = [
-  MovieModel(
+  const MovieModel(
       title: "3 Idiots",
       description: "description",
       actors: [
@@ -34,25 +38,25 @@ List<MovieModel> movies = [
       ],
       like: 84,
       bannerUrl: "assets/movies/3Idiots.png"),
-  MovieModel(
+  const MovieModel(
       title: "DDLJ",
       description: "description",
       actors: ["Shah Rukh Khan", " Kajol", "Amrish Puri", "Anupam Kher"],
       like: 80,
       bannerUrl: "assets/movies/Ddlj.png"),
-  MovieModel(
+  const MovieModel(
       title: "Bajrangi Bhaijaan",
       description: "description",
       actors: ["Salman Khan", "Kareena Kapoor", "Nawabzuddin Siddiqui"],
       like: 81,
       bannerUrl: "assets/movies/BajarangiBhaijaan.png"),
-  MovieModel(
+  const MovieModel(
       title: "Dangal",
       description: "description",
       actors: ["Aamir Khan", "Fatima Sana Shaikh", "Sanya Malhotra"],
       like: 83,
       bannerUrl: "assets/movies/Dangal.png"),
-  MovieModel(
+  const MovieModel(
       title: "Dhoom 3",
       description: "description",
       actors: [
@@ -64,13 +68,13 @@ List<MovieModel> movies = [
       ],
       like: 54,
       bannerUrl: "assets/movies/Dhoom3.png"),
-  MovieModel(
+  const MovieModel(
       title: "Tiger Zinda Hai",
       description: "description",
       actors: ["Salman Khan", "Katrina Kaif", "Paresh Rawal", "Angad Badi"],
       like: 76,
       bannerUrl: "assets/movies/TigerZindaHai.png"),
-  MovieModel(
+  const MovieModel(
       title: "Sanju",
       description: "description",
       actors: [
@@ -85,91 +89,124 @@ List<MovieModel> movies = [
 ];
 
 List<EventModel> events = [
-  EventModel(
-    title: "Dandiya Night",
-    description: "description",
-    bannerUrl: "assets/events/Event1.png",
-    date: "date"
-  ),
-  EventModel(
-    title: "Sid id Kidding",
-    description: "description",
-    bannerUrl: "assets/events/Event2.png",
-    date: "date"
-  ),
-  EventModel(
-    title: "Bassi",
-    description: "description",
-    bannerUrl: "assets/events/Event3.png",
-    date: "date"
-  ),
-  EventModel(
-    title: "Gujarat 11",
-    description: "description",
-    bannerUrl: "assets/events/Event4.png",
-    date: "date"
-  ),
-  EventModel(
-    title: "Vhalam",
-    description: "description",
-    bannerUrl: "assets/events/Event5.png",
-    date: "date"
-  ),
-  EventModel(
-    title: "Viranjali",
-    description: "description",
-    bannerUrl: "assets/events/Event6.png",
-    date: "date"
-  ),
-  EventModel(
-    title: "Gujarat Garba",
-    description: "description",
-    bannerUrl: "assets/events/Event7.png",
-    date: "date"
-  ),
-];
-
-List<PlayModel> plays = [
-  PlayModel(
+  const EventModel(
       title: "Dandiya Night",
       description: "description",
       bannerUrl: "assets/events/Event1.png",
-      date: "date"
-  ),
-  PlayModel(
+      date: "date"),
+  const EventModel(
       title: "Sid id Kidding",
       description: "description",
       bannerUrl: "assets/events/Event2.png",
-      date: "date"
-  ),
-  PlayModel(
+      date: "date"),
+  const EventModel(
       title: "Bassi",
       description: "description",
       bannerUrl: "assets/events/Event3.png",
-      date: "date"
-  ),
-  PlayModel(
+      date: "date"),
+  const EventModel(
       title: "Gujarat 11",
       description: "description",
       bannerUrl: "assets/events/Event4.png",
-      date: "date"
-  ),
-  PlayModel(
+      date: "date"),
+  const EventModel(
       title: "Vhalam",
       description: "description",
       bannerUrl: "assets/events/Event5.png",
-      date: "date"
-  ),
-  PlayModel(
+      date: "date"),
+  const EventModel(
       title: "Viranjali",
       description: "description",
       bannerUrl: "assets/events/Event6.png",
-      date: "date"
-  ),
-  PlayModel(
+      date: "date"),
+  const EventModel(
       title: "Gujarat Garba",
       description: "description",
       bannerUrl: "assets/events/Event7.png",
-      date: "date"
+      date: "date"),
+];
+
+List<PlayModel> plays = [
+  const PlayModel(
+      title: "Dandiya Night",
+      description: "description",
+      bannerUrl: "assets/events/Event1.png",
+      date: "date"),
+  const PlayModel(
+      title: "Sid id Kidding",
+      description: "description",
+      bannerUrl: "assets/events/Event2.png",
+      date: "date"),
+  const PlayModel(
+      title: "Bassi",
+      description: "description",
+      bannerUrl: "assets/events/Event3.png",
+      date: "date"),
+  const PlayModel(
+      title: "Gujarat 11",
+      description: "description",
+      bannerUrl: "assets/events/Event4.png",
+      date: "date"),
+  const PlayModel(
+      title: "Vhalam",
+      description: "description",
+      bannerUrl: "assets/events/Event5.png",
+      date: "date"),
+  const PlayModel(
+      title: "Viranjali",
+      description: "description",
+      bannerUrl: "assets/events/Event6.png",
+      date: "date"),
+  const PlayModel(
+      title: "Gujarat Garba",
+      description: "description",
+      bannerUrl: "assets/events/Event7.png",
+      date: "date"),
+];
+
+List<OfferModel> offers = [
+  OfferModel(
+    title: "Wait! Grab a Free Reward",
+    description: "Book your seats and tap on box to claim it!",
+    startTime: DateTime(2023, 7, 25, 12),
+    expiry: DateTime(2023, 8, 25, 12),
+    discount: 50,
   ),
+  OfferModel(
+    title: "Wait! Grab a Free Reward",
+    description: "Book your seats and tap on box to claim it!",
+    startTime: DateTime(2023, 3, 7, 12),
+    expiry: DateTime(2024, 3, 7, 12),
+    discount: 100,
+    color: Mytheme.greenTextColor,
+    gradientColor: Mytheme.greenGiftGradientColors,
+  ),
+];
+
+List<CrewCastModel> casts = [
+  CrewCastModel(
+      movieId: "3 Idiots",
+      castId: "AK",
+      name: "Aamir Khan",
+      image: "assets/casts/AK.png"),
+  CrewCastModel(
+      movieId: "3 Idiots",
+      castId: "RM",
+      name: "R. Madhvan",
+      image: "assets/casts/RM.png"),
+  CrewCastModel(
+      movieId: "3 Idiots",
+      castId: "SJ",
+      name: "Shamaran Joshi",
+      image: "assets/casts/SJ.png"),
+  CrewCastModel(
+      movieId: "3 Idiots",
+      castId: "KK",
+      name: "Kareena Kapoor",
+      image: "assets/casts/KK.png"),
+  CrewCastModel(
+      movieId: "3 Idiots",
+      castId: "BI",
+      name: "Boman Irani",
+      image: "assets/casts/BI.png"),
 ];

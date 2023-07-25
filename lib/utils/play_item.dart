@@ -19,6 +19,7 @@ class PlayItem extends StatelessWidget {
         itemBuilder: (_, i) {
           return ItemBlock(
             model: plays[i],
+            onTap: (model) {},
           );
         },
       ),

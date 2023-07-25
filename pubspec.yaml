@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.2.0
   google_maps_flutter: ^2.3.1
   google_maps_flutter_android: ^2.4.15
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -74,9 +75,11 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
+    - assets/
     - assets/images/
     - assets/movies/
     - assets/events/
+    - assets/casts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
