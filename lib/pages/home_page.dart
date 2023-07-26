@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:booktheater/controllers/auth_controller.dart';
 import 'package:booktheater/controllers/location_controller.dart';
 import 'package:booktheater/controllers/shared_pref.dart';
@@ -10,9 +12,12 @@ import 'package:booktheater/utils/menu_item.dart';
 import 'package:booktheater/utils/movies_item.dart';
 import 'package:booktheater/utils/mytheme.dart';
 import 'package:booktheater/utils/play_item.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../utils/event_item.dart';
 
@@ -36,6 +41,17 @@ class _HomePageState extends State<HomePage> {
 
     String? PicUrl = AuthController.instance.user?.photoURL;
     PicUrl = PicUrl ?? Constants.dummyAvatar;
+
+    final Completer<GoogleMapController> _controller = Completer();
+    const CameraPosition kGooglePlex = CameraPosition(
+      target: LatLng(23.106558, 72.604289),
+      zoom: 17,
+    );
+    // const CameraPosition _kLake = CameraPosition(
+    //     bearing: 192.8334901395799,
+    //     target: LatLng(37.43296265331129, -122.08832357078792),
+    //     tilt: 59.440717697143555,
+    //     zoom: 19.151926040649414);
 
     @override
     void initState() {
@@ -186,43 +202,48 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const MoviesItem(),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(
-                //         "NEAR BY THEATERS",
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.black.withOpacity(0.6),
-                //         ),
-                //       ),
-                //       TextButton(
-                //         onPressed: () {},
-                //         child: const Text(
-                //           "View All",
-                //           style: TextStyle(
-                //             fontWeight: FontWeight.bold,
-                //             color: Mytheme.splash,
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Container(
-                //   height: size.height * 0.2,
-                //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                //   child: GoogleMap(
-                //     mapType: MapType.normal,
-                //     initialCamaraPosition: _kGooglePlex,
-                //     onMapCreated: (GoogleMapController controller) {
-                //       // _controller.complete(controller);
-                //     },
-                //     zoomControlsEnabled: false,
-                //   ),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "NEAR BY THEATERS",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black.withOpacity(0.6),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "View All",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Mytheme.splash,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: size.height * 0.2,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                      Factory<OneSequenceGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                      )
+                    },
+                    zoomControlsEnabled: false,
+                    initialCameraPosition: kGooglePlex,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 15, right: 20),
                   child: Row(
