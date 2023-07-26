@@ -159,11 +159,10 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                 itemCount: 3,
                 itemBuilder: (_, index) => LayoutBuilder(
                   builder: (context, constraints) => GridView.builder(
-                      shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: constraints.maxWidth > 480 ? 4 : 2,
-                        childAspectRatio: 1,
+                        childAspectRatio: 0.8,
                       ),
                       itemCount: list.length,
                       itemBuilder: (_, i) {
@@ -171,7 +170,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                           model: list[i],
                           height: 180,
                           width: 150,
-                          isMovie: menu.name.toLowerCase().contains("Movies"),
+                          isMovie: menu.name.contains("Movies"),
                           onTap: (model) {},
                         );
                       }),

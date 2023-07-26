@@ -25,55 +25,64 @@ class ItemBlock extends StatelessWidget {
         onTap: () {
           onTap(model);
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                model.bannerUrl,
-                height: height,
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  model.bannerUrl,
+                  height: height,
+                  width: width,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Container(
                 width: width,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            Text(
-              model.title,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.black.withOpacity(0.6),
-              ),
-            ),
-            isMovie
-                ? Row(
-                    children: [
-                      const Icon(
-                        Icons.favorite_rounded,
-                        color: Colors.pinkAccent,
-                      ),
-                      const SizedBox(
-                        width: 2.5,
-                      ),
-                      Text(
-                        "${model.like}%",
-                        style: const TextStyle(
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
-                  )
-                : Text(
-                    model.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 10,
-                    ),
+                child: Text(
+                  model.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black.withOpacity(0.6),
                   ),
-          ],
+                ),
+              ),
+              isMovie
+                  ? Row(
+                      children: [
+                        const Icon(
+                          Icons.favorite_rounded,
+                          color: Colors.pinkAccent,
+                        ),
+                        const SizedBox(
+                          width: 2.5,
+                        ),
+                        Text(
+                          "${model.like}%",
+                          style: const TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      model.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );
