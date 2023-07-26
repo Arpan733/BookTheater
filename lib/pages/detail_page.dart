@@ -1,3 +1,4 @@
+import 'package:booktheater/pages/list_cinema_screen.dart';
 import 'package:booktheater/utils/mytheme.dart';
 import 'package:booktheater/widgets/offers_block.dart';
 import 'package:flutter/material.dart';
@@ -152,8 +153,17 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         child: ElevatedButton(
-          onPressed: () {},
-          child: Container(
+          onPressed: () {
+            Get.to(() => ListCinemaScreen(model: model));
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Mytheme.splash,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+          ),
+          child: const SizedBox(
             width: double.maxFinite,
             height: 50,
             child: Row(
@@ -163,7 +173,7 @@ class DetailPage extends StatelessWidget {
                   Icons.event_seat,
                   color: Colors.white,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Text(
@@ -173,13 +183,6 @@ class DetailPage extends StatelessWidget {
                   ),
                 )
               ],
-            ),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Mytheme.splash,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0),
             ),
           ),
         ),

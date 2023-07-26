@@ -6,6 +6,7 @@ import '../model/event_model.dart';
 import '../model/menu_model.dart';
 import '../model/movie_model.dart';
 import '../model/offer_model.dart';
+import '../model/theater_model.dart';
 
 List<String> cities = [
   "Surat",
@@ -184,29 +185,36 @@ List<OfferModel> offers = [
 ];
 
 List<CrewCastModel> casts = [
-  CrewCastModel(
+  const CrewCastModel(
       movieId: "3 Idiots",
       castId: "AK",
       name: "Aamir Khan",
       image: "assets/casts/AK.png"),
-  CrewCastModel(
+  const CrewCastModel(
       movieId: "3 Idiots",
       castId: "RM",
       name: "R. Madhvan",
       image: "assets/casts/RM.png"),
-  CrewCastModel(
+  const CrewCastModel(
       movieId: "3 Idiots",
       castId: "SJ",
       name: "Shamaran Joshi",
       image: "assets/casts/SJ.png"),
-  CrewCastModel(
+  const CrewCastModel(
       movieId: "3 Idiots",
       castId: "KK",
       name: "Kareena Kapoor",
       image: "assets/casts/KK.png"),
-  CrewCastModel(
+  const CrewCastModel(
       movieId: "3 Idiots",
       castId: "BI",
       name: "Boman Irani",
       image: "assets/casts/BI.png"),
+];
+
+List<TheaterModel> theaters = [
+  const TheaterModel(id: '1', name: 'PVR Motera'),
+  const TheaterModel(id: '2', name: 'NY Cinema'),
+  const TheaterModel(id: '3', name: 'INOX Raj Imperial'),
+  const TheaterModel(id: '4', name: 'PVR RR Mall'),
 ];
