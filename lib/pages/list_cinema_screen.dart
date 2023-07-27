@@ -13,6 +13,21 @@ class ListCinemaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String text = "";
+    String todayDate = DateFormat('dd MMM').format(DateTime.now());
+    String tomorrowDate = DateFormat('dd MMM').format(DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
+    String selectedDate = DateFormat('dd MMM').format(DateTime.now());
+
+    String selectedLanguage = "Hindi";
+    String selectedScreen = "2D";
+
+    if (selectedDate == todayDate) {
+      text = "Today, ";
+    } else if (selectedDate == tomorrowDate) {
+      text = "Tomorrow, ";
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5FA),
       bottomNavigationBar: BottomAppBar(
@@ -25,11 +40,37 @@ class ListCinemaScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: ListTile(
+                  horizontalTitleGap: 0,
+                  leading: const Icon(
+                    Icons.calendar_month,
+                    color: Colors.white,
+                  ),
                   title: Text(
-                    DateFormat('MMM DD').format(DateTime.now()),
+                    '$text$selectedDate',
                     style: const TextStyle(
                       color: Colors.white,
+                      fontSize: 14,
                     ),
+                  ),
+                  trailing: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  horizontalTitleGap: 0,
+                  title: Text(
+                    '$selectedLanguage,$selectedScreen',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                  trailing: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.white,
                   ),
                 ),
               ),

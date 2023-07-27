@@ -1,4 +1,5 @@
 import 'package:booktheater/controllers/location_controller.dart';
+import 'package:booktheater/widgets/facility_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 import '../model/theater_model.dart';
@@ -23,9 +24,19 @@ class TheaterBlock extends StatelessWidget {
               Text(
                 model.name,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    constraints: BoxConstraints.expand(
+                      height: MediaQuery.of(context).size.height * 0.635,
+                    ),
+                    builder: (_) => FacilityBottomSheet(model: model),
+                  );
+                },
+                child: Icon(
                   Icons.info_outline,
                   color: Colors.black45.withOpacity(0.3),
                 ),

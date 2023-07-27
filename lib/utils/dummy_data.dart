@@ -218,3 +218,10 @@ List<TheaterModel> theaters = [
   const TheaterModel(id: '3', name: 'INOX Raj Imperial'),
   const TheaterModel(id: '4', name: 'PVR RR Mall'),
 ];
+
+List<String> facilityAsset = [
+  "assets/images/CancelTicket.png",
+  "assets/images/Parking.png",
+  "assets/images/Hotel.png",
+  "assets/images/Park.png",
+];
