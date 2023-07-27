@@ -2,118 +2,168 @@ import 'package:booktheater/model/movie_model.dart';
 import 'package:booktheater/utils/dummy_data.dart';
 import 'package:booktheater/widgets/theater_block.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../controllers/calender_controller.dart';
+import '../utils/custom_calender.dart';
 import '../utils/mytheme.dart';
 
-class ListCinemaScreen extends StatelessWidget {
+class ListCinemaScreen extends StatefulWidget {
   final MovieModel model;
 
   const ListCinemaScreen({Key? key, required this.model}) : super(key: key);
 
   @override
+  State<ListCinemaScreen> createState() => _ListCinemaScreenState();
+}
+
+class _ListCinemaScreenState extends State<ListCinemaScreen> {
+  final DateFormat format = DateFormat("dd MMM");
+
+  final now = DateTime.now();
+
+  String selectedDate = DateFormat("dd MMM").format(DateTime.now());
+
+  String selectedLanguage = "English";
+
+  String selectedScreen = "3D";
+  late CalendarController commonController;
+
+  @override
+  void initState() {
+    commonController = Get.put(CalendarController());
+    // Get.put(SeatSelectionController());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String text = "";
-    String todayDate = DateFormat('dd MMM').format(DateTime.now());
-    String tomorrowDate = DateFormat('dd MMM').format(DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
-    String selectedDate = DateFormat('dd MMM').format(DateTime.now());
+    return WillPopScope(
+      onWillPop: () {
+        Get.delete<CalendarController>();
+        print(commonController.selectedMovieDate.value);
+        return Future.value(true);
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF5F5FA),
+        bottomNavigationBar: BottomAppBar(
+          color: Mytheme.statusBarColor,
+          elevation: 0,
+          child: Container(
+            height: AppBar().preferredSize.height,
+            width: double.maxFinite,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: StatefulBuilder(
+                    builder: (_, setState) {
+                      final todayDate = format.format(now);
+                      final tomorrowDate =
+                          format.format(now.add(const Duration(days: 1)));
+                      String text = "";
 
-    String selectedLanguage = "Hindi";
-    String selectedScreen = "2D";
+                      if (selectedDate == todayDate) {
+                        text = "Today, ";
+                      } else if (selectedDate == tomorrowDate) {
+                        text = "Tomorrow, ";
+                      } else {
+                        text =
+                            "${DateFormat("EEE").format(commonController.selectedMovieDate.value)}, ";
+                      }
 
-    if (selectedDate == todayDate) {
-      text = "Today, ";
-    } else if (selectedDate == tomorrowDate) {
-      text = "Tomorrow, ";
-    }
-
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5FA),
-      bottomNavigationBar: BottomAppBar(
-        color: Mytheme.statusBarColor,
-        elevation: 0,
-        child: Container(
-          height: AppBar().preferredSize.height,
-          width: double.maxFinite,
-          child: Row(
-            children: [
-              Expanded(
-                child: ListTile(
-                  horizontalTitleGap: 0,
-                  leading: const Icon(
-                    Icons.calendar_month,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    '$text$selectedDate',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  trailing: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.white,
+                      return ListTile(
+                        onTap: () {
+                          showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => const CustomCalendar(),
+                                  constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height *
+                                              0.35))
+                              .then((value) => setState(() {
+                                    if (value != null) {
+                                      selectedDate = format.format(value);
+                                    }
+                                  }));
+                        },
+                        horizontalTitleGap: 0,
+                        textColor: Colors.white,
+                        leading: const Icon(
+                          Icons.calendar_month,
+                          color: Colors.white,
+                        ),
+                        title: Text(
+                          "$text$selectedDate",
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
                   ),
                 ),
-              ),
-              Expanded(
-                child: ListTile(
-                  horizontalTitleGap: 0,
-                  title: Text(
-                    '$selectedLanguage,$selectedScreen',
-                    style: const TextStyle(
+                Expanded(
+                  flex: 5,
+                  child: ListTile(
+                    horizontalTitleGap: 0,
+                    title: Text(
+                      '$selectedLanguage,$selectedScreen',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.keyboard_arrow_down,
                       color: Colors.white,
-                      fontSize: 14,
                     ),
                   ),
-                  trailing: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.white,
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      appBar: AppBar(
-        title: Text(
-          model.title,
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              // showSearch(
-              //   context: context,
-              //   delegate: MySearchDelegate(
-              //     isMovie: menu.name.contains("Movies") ? true : false,
-              //     list: list,
-              //   ),
-              // );
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 15, right: 15),
-              child: Image.asset(
-                "assets/images/Search.png",
-                height: 25,
+        appBar: AppBar(
+          title: Text(
+            widget.model.title,
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                // showSearch(
+                //   context: context,
+                //   delegate: MySearchDelegate(
+                //     isMovie: menu.name.contains("Movies") ? true : false,
+                //     list: list,
+                //   ),
+                // );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, bottom: 15, right: 15),
+                child: Image.asset(
+                  "assets/images/Search.png",
+                  height: 25,
+                ),
               ),
-            ),
-          )
-        ],
-        elevation: 0,
-      ),
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: theaters.length,
-        itemBuilder: (_, index) {
-          return Container(
-            padding: EdgeInsets.only(
-                top: 5, bottom: index != theaters.length - 1 ? 20 : 0),
-            child: TheaterBlock(model: theaters[index]),
-          );
-        },
+            )
+          ],
+          elevation: 0,
+        ),
+        body: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: theaters.length,
+          itemBuilder: (_, index) {
+            return Container(
+              padding: EdgeInsets.only(
+                  top: 5, bottom: index != theaters.length - 1 ? 20 : 0),
+              child: TheaterBlock(model: theaters[index]),
+            );
+          },
+        ),
       ),
     );
   }
