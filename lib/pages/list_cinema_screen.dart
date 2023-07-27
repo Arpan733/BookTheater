@@ -156,13 +156,10 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                // showSearch(
-                //   context: context,
-                //   delegate: MySearchDelegate(
-                //     isMovie: menu.name.contains("Movies") ? true : false,
-                //     list: list,
-                //   ),
-                // );
+                showSearch(
+                  context: context,
+                  delegate: TheaterSearchDelegate(),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 15, right: 15),
@@ -187,6 +184,54 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
           },
         ),
       ),
+    );
+  }
+}
+
+class TheaterSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [Container()];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null.toString());
+      },
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_close,
+        progress: transitionAnimation,
+      ),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionTheater = query.isEmpty
+        ? theaters
+        : theaters
+            .where((element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      itemCount: suggestionTheater.length,
+      itemBuilder: (_, index) {
+        return Container(
+          padding: EdgeInsets.only(
+              top: 5, bottom: index != suggestionTheater.length - 1 ? 20 : 0),
+          child: TheaterBlock(model: suggestionTheater[index]),
+        );
+      },
     );
   }
 }
