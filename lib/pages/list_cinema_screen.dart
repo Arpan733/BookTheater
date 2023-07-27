@@ -6,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../controllers/calender_controller.dart';
+import '../controllers/common_controller.dart';
 import '../utils/custom_calender.dart';
 import '../utils/mytheme.dart';
+import '../widgets/screen_selection_block.dart';
 
 class ListCinemaScreen extends StatefulWidget {
   final MovieModel model;
@@ -25,9 +27,9 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
 
   String selectedDate = DateFormat("dd MMM").format(DateTime.now());
 
-  String selectedLanguage = "English";
+  String selectedLanguage = "Hindi";
 
-  String selectedScreen = "3D";
+  String selectedScreen = "2D";
   late CalendarController commonController;
 
   @override
@@ -108,19 +110,39 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
                 ),
                 Expanded(
                   flex: 5,
-                  child: ListTile(
-                    horizontalTitleGap: 0,
-                    title: Text(
-                      '$selectedLanguage,$selectedScreen',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                    trailing: const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.white,
-                    ),
+                  child: StatefulBuilder(
+                    builder: (context, setState) {
+                      return ListTile(
+                        onTap: () {
+                          showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (_) => ScreenSelectionBlock(
+                                    onScreenSelect: (screen) {
+                                      CommonController.instance
+                                          .updateScreen(screen);
+                                      setState(() => selectedScreen = screen);
+                                    },
+                                  ),
+                              constraints: BoxConstraints(
+                                  maxHeight:
+                                      MediaQuery.of(context).size.height *
+                                          0.25));
+                        },
+                        horizontalTitleGap: 0,
+                        title: Text(
+                          '$selectedLanguage,$selectedScreen',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

@@ -225,3 +225,8 @@ List<String> facilityAsset = [
   "assets/images/Hotel.png",
   "assets/images/Park.png",
 ];
+
+List<String> screens = [
+  "2D",
+  "3D",
+];

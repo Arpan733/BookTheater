@@ -7,6 +7,7 @@ class TheaterModel {
   final List<String> facilities;
   final String fullAddress;
   final List<String> timings;
+  final List<String> screens;
 
   const TheaterModel({
     required this.id,
@@ -21,6 +22,7 @@ class TheaterModel {
     this.fullAddress =
         "4d Square Mall, opp. Vishwakarma Engineering College, Motera, Ahmedabad, Gujarat 380005",
     this.timings = const ["10:00 AM", "1:30 PM", "6:00 PM", "9:30 PM"],
+    this.screens = const ["2D", "3D"],
   });
 
   @override
@@ -33,7 +35,8 @@ class TheaterModel {
           coordinates == other.coordinates &&
           facilities == other.facilities &&
           fullAddress == other.fullAddress &&
-          timings == other.timings);
+          timings == other.timings &&
+          screens == other.screens);
 
   @override
   int get hashCode =>
@@ -42,7 +45,8 @@ class TheaterModel {
       coordinates.hashCode ^
       facilities.hashCode ^
       fullAddress.hashCode ^
-      timings.hashCode;
+      timings.hashCode ^
+      screens.hashCode;
 
   @override
   String toString() {
@@ -53,6 +57,7 @@ class TheaterModel {
         ' facilities: $facilities,' +
         ' fullAddress: $fullAddress,' +
         ' timings: $timings,' +
+        ' screens: $screens,' +
         '}';
   }
 
@@ -63,6 +68,7 @@ class TheaterModel {
     List<String>? facilities,
     String? fullAddress,
     List<String>? timings,
+    List<String>? screens,
   }) {
     return TheaterModel(
       id: id ?? this.id,
@@ -71,6 +77,7 @@ class TheaterModel {
       facilities: facilities ?? this.facilities,
       fullAddress: fullAddress ?? this.fullAddress,
       timings: timings ?? this.timings,
+      screens: screens ?? this.screens,
     );
   }
 
@@ -86,6 +93,7 @@ class TheaterModel {
       keyMapper('facilities'): this.facilities,
       keyMapper('fullAddress'): this.fullAddress,
       keyMapper('timings'): this.timings,
+      keyMapper('screens'): this.screens,
     };
   }
 
@@ -102,6 +110,7 @@ class TheaterModel {
       facilities: map[keyMapper('facilities')] as List<String>,
       fullAddress: map[keyMapper('fullAddress')] as String,
       timings: map[keyMapper('timings')] as List<String>,
+      screens: map[keyMapper('screens')] as List<String>,
     );
   }
 }
