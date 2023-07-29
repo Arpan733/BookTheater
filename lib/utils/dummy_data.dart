@@ -1,4 +1,5 @@
 import 'package:booktheater/model/play_model.dart';
+import 'package:booktheater/model/seat_layout_model.dart';
 import 'package:booktheater/utils/mytheme.dart';
 
 import '../model/crea_cast_model.dart';
@@ -230,3 +231,20 @@ List<String> screens = [
   "2D",
   "3D",
 ];
+
+const seatLayoutModel = SeatLayoutModel(
+  rows: 10,
+  cols: 11,
+  seatTypes: [
+    {"title": "King", "price": 150, "status": "Filing Fast"},
+    {"title": "Queen", "price": 100, "status": "Filing Fast"},
+    {"title": "Jack", "price": 50, "status": "Available"},
+  ],
+  theaterId: 1,
+  gap: 2,
+  gapColIndex: 5,
+  isLastFilled: true,
+  rowBreaks: [5, 4, 3],
+);
+
+final List<int> s = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

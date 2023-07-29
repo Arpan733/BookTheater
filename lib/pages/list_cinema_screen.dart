@@ -1,4 +1,5 @@
 import 'package:booktheater/model/movie_model.dart';
+import 'package:booktheater/pages/seat_selection_screen.dart';
 import 'package:booktheater/utils/dummy_data.dart';
 import 'package:booktheater/widgets/theater_block.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../controllers/calender_controller.dart';
 import '../controllers/common_controller.dart';
+import '../controllers/seat_selection_controller.dart';
 import '../utils/custom_calender.dart';
 import '../utils/mytheme.dart';
 import '../widgets/screen_selection_block.dart';
@@ -35,7 +37,7 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
   @override
   void initState() {
     commonController = Get.put(CalendarController());
-    // Get.put(SeatSelectionController());
+    Get.put(SeatSelectionController());
     super.initState();
   }
 
@@ -44,7 +46,6 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
     return WillPopScope(
       onWillPop: () {
         Get.delete<CalendarController>();
-        print(commonController.selectedMovieDate.value);
         return Future.value(true);
       },
       child: Scaffold(
@@ -131,7 +132,7 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
                         },
                         horizontalTitleGap: 0,
                         title: Text(
-                          '$selectedLanguage,$selectedScreen',
+                          '$selectedLanguage, $selectedScreen',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -158,7 +159,9 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
               onTap: () {
                 showSearch(
                   context: context,
-                  delegate: TheaterSearchDelegate(),
+                  delegate: TheaterSearchDelegate(
+                    model: widget.model,
+                  ),
                 );
               },
               child: Padding(
@@ -179,7 +182,16 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
             return Container(
               padding: EdgeInsets.only(
                   top: 5, bottom: index != theaters.length - 1 ? 20 : 0),
-              child: TheaterBlock(model: theaters[index]),
+              child: TheaterBlock(
+                isBooking: false,
+                model: theaters[index],
+                onTimeTap: (i) {
+                  Get.to(() => SeatSelectionScreen(
+                        movieModel: widget.model,
+                        theaterModel: theaters[index],
+                      ));
+                },
+              ),
             );
           },
         ),
@@ -189,6 +201,10 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
 }
 
 class TheaterSearchDelegate extends SearchDelegate {
+  final MovieModel model;
+
+  TheaterSearchDelegate({required this.model});
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [Container()];
@@ -229,7 +245,14 @@ class TheaterSearchDelegate extends SearchDelegate {
         return Container(
           padding: EdgeInsets.only(
               top: 5, bottom: index != suggestionTheater.length - 1 ? 20 : 0),
-          child: TheaterBlock(model: suggestionTheater[index]),
+          child: TheaterBlock(
+            isBooking: false,
+            model: suggestionTheater[index],
+            onTimeTap: (index) {
+              Get.to((index) => SeatSelectionScreen(
+                  movieModel: model, theaterModel: suggestionTheater[index]));
+            },
+          ),
         );
       },
     );

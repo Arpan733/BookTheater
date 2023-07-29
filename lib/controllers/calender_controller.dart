@@ -2,17 +2,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CalendarController extends GetxController {
-  //calendar controller
-
   static CalendarController instance = Get.find();
-  late Rx<DateTime> selectedMovieDate;
+  late Rx<DateTime> selectedMovieDate = DateTime.now().obs;
   final DateFormat format = DateFormat("EEEE, MMM dd, yyyy");
   final DateTime todayDate = DateTime.now();
   List<DateTime> thisWeek = [], nextWeek = [];
 
   @override
   void onReady() {
-    selectedMovieDate = DateTime.now().obs;
     updateWeekDay();
   }
 
