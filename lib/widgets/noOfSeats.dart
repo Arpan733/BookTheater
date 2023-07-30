@@ -21,9 +21,8 @@ class _NoOfScreenState extends State<NoOfScreen> {
       () => Wrap(
         alignment: WrapAlignment.spaceAround,
         children: List.generate(s.length, (index) {
-          index = index + 1;
           return GestureDetector(
-            onTap: () => widget.onTap(index),
+            onTap: () => widget.onTap(index + 1),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               padding: const EdgeInsets.all(5),
@@ -31,15 +30,16 @@ class _NoOfScreenState extends State<NoOfScreen> {
               width: 35,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: index == SeatSelectionController.instance.noOfSeats.value
+                color: index + 1 ==
+                        SeatSelectionController.instance.noOfSeats.value
                     ? Mytheme.greenColor
                     : Colors.white,
               ),
               child: Center(
                 child: Text(
-                  "${index}",
+                  "${index + 1}",
                   style: TextStyle(
-                    color: index ==
+                    color: index + 1 ==
                             SeatSelectionController.instance.noOfSeats.value
                         ? Colors.white
                         : Colors.black87,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class SeatSelectionController extends GetxController {
   static SeatSelectionController instance = Get.find();
@@ -8,6 +9,9 @@ class SeatSelectionController extends GetxController {
   RxInt noOfSeats = indexValue.obs;
   RxInt seatTypes = indexValue.obs;
   RxBool isSelecation = false.obs;
+  RxList selectedSeats = [].obs;
+  RxDouble seatPrice = 0.0.obs;
+  RxList seatPriceList = [].obs;
 
   Widget getImage() {
     int val = noOfSeats.value;
