@@ -33,34 +33,36 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         height: double.maxFinite,
         width: double.maxFinite,
         color: Colors.white,
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Text(
-                "How many seats?",
-                style: TextStyle(
-                  fontSize: 16,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Text(
+                  "How many seats?",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
-            ),
-            Obx(() => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  // padding: const EdgeInsets.symmetric(
-                  //     horizontal: 50, vertical: 30),
-                  // height: 150,
-                  child: SeatSelectionController.instance.getImage(),
-                )),
-            NoOfScreen(
-              onTap: SeatSelectionController.instance.noOfSeats,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SeatTypes(
-              onTap: SeatSelectionController.instance.seatTypes,
-            ),
-          ],
+              Obx(() => AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    // padding: const EdgeInsets.symmetric(
+                    //     horizontal: 50, vertical: 30),
+                    // height: 150,
+                    child: SeatSelectionController.instance.getImage(),
+                  )),
+              NoOfScreen(
+                onTap: SeatSelectionController.instance.noOfSeats,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SeatTypes(
+                onTap: SeatSelectionController.instance.seatTypes,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -70,13 +72,21 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         child: ElevatedButton(
           onPressed: () {
             // print(SeatSelectionController.instance.isSelecation.value);
-            toggle(true);
+
             if (SeatSelectionController.instance.isSelecation.value) {
               if (SeatSelectionController.instance.seatPrice <= 0.0) {
                 AuthController.instance
-                    .getErrorSnackBarNew("please select at least one seat");
+                    .getErrorSnackBarNew("Please select at least one seat");
                 return;
               }
+              SeatSelectionController.instance.createOrder();
+            } else {
+              if (SeatSelectionController.instance.noOfSeats.value <= 0) {
+                AuthController.instance
+                    .getErrorSnackBarNew("Please select number of seats");
+                return;
+              }
+              toggle(true);
             }
           },
           style: ElevatedButton.styleFrom(
