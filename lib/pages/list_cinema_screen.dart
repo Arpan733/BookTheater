@@ -1,4 +1,3 @@
-import 'package:booktheater/model/movie_model.dart';
 import 'package:booktheater/pages/seat_selection_screen.dart';
 import 'package:booktheater/utils/dummy_data.dart';
 import 'package:booktheater/widgets/theater_block.dart';
@@ -14,7 +13,7 @@ import '../utils/mytheme.dart';
 import '../widgets/screen_selection_block.dart';
 
 class ListCinemaScreen extends StatefulWidget {
-  final MovieModel model;
+  final dynamic model;
 
   const ListCinemaScreen({Key? key, required this.model}) : super(key: key);
 
@@ -152,7 +151,7 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
         ),
         appBar: AppBar(
           title: Text(
-            widget.model.title,
+            widget.model['title'],
           ),
           actions: [
             GestureDetector(
@@ -201,7 +200,7 @@ class _ListCinemaScreenState extends State<ListCinemaScreen> {
 }
 
 class TheaterSearchDelegate extends SearchDelegate {
-  final MovieModel model;
+  final dynamic model;
 
   TheaterSearchDelegate({required this.model});
 

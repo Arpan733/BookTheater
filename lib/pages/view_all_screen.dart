@@ -4,9 +4,11 @@ import 'package:booktheater/utils/dummy_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/movie_controller.dart';
 import '../model/menu_model.dart';
 import '../utils/mytheme.dart';
 import '../widgets/item_block.dart';
+import 'detail_page.dart';
 
 class ViewAllScreen extends StatefulWidget {
   const ViewAllScreen({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
   @override
   void initState() {
     if (menu.name.contains("Movies")) {
-      list = movies;
+      list = MovieController.instance.trendingMovies;
     } else if (menu.name.contains("Events")) {
       list = events;
     } else if (menu.name.contains("Plays")) {
@@ -167,11 +169,16 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                       itemCount: list.length,
                       itemBuilder: (_, i) {
                         return ItemBlock(
-                          model: list[i],
+                          model: CommonController.instance.list[i],
                           height: 180,
                           width: 150,
                           isMovie: menu.name.contains("Movies"),
-                          onTap: (model) {},
+                          onTap: (model) {
+                            Get.to(() => DetailPage(), arguments: [
+                              CommonController.instance.list[i],
+                              i
+                            ]);
+                          },
                         );
                       }),
                 ),
@@ -223,8 +230,28 @@ class MySearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
+    final suggestionList = query.isEmpty
+        ? list
+        : list
+            .where((element) =>
+                element['title'] != null &&
+                element['title']!.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+    return LayoutBuilder(
+      builder: (context, constraints) => GridView.builder(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: constraints.maxWidth > 480 ? 4 : 2,
+          childAspectRatio: 0.8,
+        ),
+        itemCount: suggestionList.length,
+        itemBuilder: (_, index) => resultWidget(
+          suggestionList[index],
+        ),
+      ),
+    );
   }
 
   @override
@@ -233,7 +260,10 @@ class MySearchDelegate extends SearchDelegate<String> {
         ? list
         : list
             .where((element) =>
-                element.title.toLowerCase().contains(query.toLowerCase()))
+                (element['title'] as String?)
+                    ?.toLowerCase()
+                    ?.contains(query.toLowerCase()) ??
+                false)
             .toList();
 
     return LayoutBuilder(

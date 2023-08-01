@@ -54,7 +54,7 @@ class LocationController extends GetxController {
   }
 
   setCity(String myCity) async {
-    city = myCity.obs;
+    city = myCity.obs.isEmpty ? cities[0].obs : myCity.obs;
     await SharedPref.storeLocation(myCity);
     update();
   }

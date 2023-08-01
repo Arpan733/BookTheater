@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:booktheater/controllers/auth_controller.dart';
 import 'package:booktheater/controllers/location_controller.dart';
+import 'package:booktheater/controllers/movie_controller.dart';
 import 'package:booktheater/controllers/shared_pref.dart';
 import 'package:booktheater/pages/profile_screen.dart';
 import 'package:booktheater/pages/select_location_screen.dart';
@@ -11,7 +12,6 @@ import 'package:booktheater/utils/dummy_data.dart';
 import 'package:booktheater/utils/menu_item.dart';
 import 'package:booktheater/utils/movies_item.dart';
 import 'package:booktheater/utils/mytheme.dart';
-import 'package:booktheater/utils/play_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../utils/event_item.dart';
+import '../utils/play_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,6 +31,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String city = cities[0];
+
+  @override
+  void initState() {
+    MovieController.instance.loadMovies();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

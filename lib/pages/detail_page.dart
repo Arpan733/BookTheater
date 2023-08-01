@@ -1,3 +1,4 @@
+import 'package:booktheater/controllers/movie_controller.dart';
 import 'package:booktheater/pages/list_cinema_screen.dart';
 import 'package:booktheater/utils/mytheme.dart';
 import 'package:booktheater/widgets/offers_block.dart';
@@ -7,17 +8,23 @@ import 'package:get/get.dart';
 import '../widgets/cast_crew_block.dart';
 import '../widgets/review_block.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   DetailPage({Key? key}) : super(key: key);
 
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
   final dynamic model = Get.arguments[0];
+
   final int index = Get.arguments[1];
 
   titleWidget(model) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "${model.title}",
+            model['title'],
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 18,
@@ -33,35 +40,35 @@ class DetailPage extends StatelessWidget {
                 width: 2.5,
               ),
               Text(
-                "${model.like}%",
+                "${(model['vote_average'] * 10).toInt()}%",
               ),
             ],
           ),
         ],
       );
 
-  final screenWidget = Row(
-    children: [
-      const Text(
-        "Hindi",
-        style: TextStyle(
-          color: Colors.pinkAccent,
-        ),
-      ),
-      const SizedBox(
-        width: 10,
-      ),
-      Container(
-        color: Colors.pinkAccent.withOpacity(0.1),
-        child: const Text(
-          "2D",
-          style: TextStyle(
-            color: Colors.pinkAccent,
+  screenWidget(model) => Row(
+        children: [
+          Text(
+            model['original_language'] == "en" ? "English" : "",
+            style: const TextStyle(
+              color: Colors.pinkAccent,
+            ),
           ),
-        ),
-      ),
-    ],
-  );
+          const SizedBox(
+            width: 10,
+          ),
+          Container(
+            color: Colors.pinkAccent.withOpacity(0.1),
+            child: const Text(
+              "2D",
+              style: TextStyle(
+                color: Colors.pinkAccent,
+              ),
+            ),
+          ),
+        ],
+      );
 
   final descriptionWidget = RichText(
     text: TextSpan(children: [
@@ -101,9 +108,13 @@ class DetailPage extends StatelessWidget {
           width: 10,
         ),
       ),
-      const TextSpan(
-        text: "Drama, Romance",
-        style: TextStyle(
+      WidgetSpan(
+        child: Text(
+          MovieController.instance.genres.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        style: const TextStyle(
           color: Colors.black45,
         ),
       ),
@@ -121,16 +132,18 @@ class DetailPage extends StatelessWidget {
             const SizedBox(
               height: 2.5,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "PG-13 | 25 Dec 2009",
-                  style: TextStyle(color: Colors.black45),
+                  "${model['release_date']}",
+                  style: const TextStyle(
+                    color: Colors.black45,
+                  ),
                 ),
                 Text(
-                  "414K votes",
-                  style: TextStyle(
+                  "${model['vote_count']}",
+                  style: const TextStyle(
                     color: Colors.pinkAccent,
                   ),
                 ),
@@ -139,7 +152,7 @@ class DetailPage extends StatelessWidget {
             const SizedBox(
               height: 2.5,
             ),
-            screenWidget,
+            screenWidget(model),
             const SizedBox(
               height: 10,
             ),
@@ -147,6 +160,12 @@ class DetailPage extends StatelessWidget {
           ],
         ),
       );
+
+  @override
+  void initState() {
+    MovieController.instance.generateGenreList(model['genre_ids']);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,22 +216,15 @@ class DetailPage extends StatelessWidget {
             leading: IconButton(
               onPressed: () {
                 Get.back();
+                MovieController.instance.genres.value = "";
               },
               icon: const Icon(Icons.arrow_back),
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
-                tag: "${model.title}$index",
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                        "assets/movies/3IdiotsBanner.png",
-                      ),
-                    ),
-                  ),
-                ),
+                tag: "A",
+                child: Image.network(
+                    "https://image.tmdb.org/t/p/w500${model['backdrop_path']}"),
               ),
             ),
           ),

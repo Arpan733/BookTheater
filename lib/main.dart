@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:booktheater/controllers/auth_controller.dart';
 import 'package:booktheater/controllers/common_controller.dart';
 import 'package:booktheater/controllers/location_controller.dart';
+import 'package:booktheater/controllers/movie_controller.dart';
 import 'package:booktheater/pages/splash_screen.dart';
 import 'package:booktheater/utils/mytheme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +24,8 @@ void main() async {
   Get.put(AuthController());
   Get.put(LocationController());
   Get.put(CommonController());
+  Get.put(MovieController());
+  MovieController.instance.loadMovies();
 
   runApp(const MyApp());
 }

@@ -1,5 +1,6 @@
 import 'package:booktheater/utils/mytheme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/auth_controller.dart';
 import '../utils/constants.dart';
@@ -57,7 +58,9 @@ class ReviewBlock extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: DateTime.now().toString(),
+                    text: DateFormat('MM-dd-yyyy HH:mm')
+                        .format(DateTime.now())
+                        .toString(),
                     style: TextStyle(
                       color: Colors.black45,
                     ),

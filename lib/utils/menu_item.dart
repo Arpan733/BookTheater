@@ -22,8 +22,9 @@ class MenuItem extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
             child: GestureDetector(
               onTap: () {
-                print(menus[i].name);
-                Get.to(() => const ViewAllScreen(), arguments: menus[i]);
+                if (i <= 2) {
+                  Get.to(() => const ViewAllScreen(), arguments: menus[i]);
+                }
               },
               child: Column(
                 children: [
