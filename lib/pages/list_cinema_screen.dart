@@ -224,8 +224,31 @@ class TheaterSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
+    final suggestionTheater = query.isEmpty
+        ? theaters
+        : theaters
+            .where((element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      itemCount: suggestionTheater.length,
+      itemBuilder: (_, index) {
+        return Container(
+          padding: EdgeInsets.only(
+              top: 5, bottom: index != suggestionTheater.length - 1 ? 20 : 0),
+          child: TheaterBlock(
+            isBooking: false,
+            model: suggestionTheater[index],
+            onTimeTap: (index) {
+              Get.to((index) => SeatSelectionScreen(
+                  movieModel: model, theaterModel: suggestionTheater[index]));
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override

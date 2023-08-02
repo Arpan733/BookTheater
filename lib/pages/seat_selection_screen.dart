@@ -8,12 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/auth_controller.dart';
-import '../model/movie_model.dart';
 import '../utils/mytheme.dart';
 import '../widgets/theater_block.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
-  final MovieModel movieModel;
+  final dynamic movieModel;
   final TheaterModel theaterModel;
 
   const SeatSelectionScreen({
@@ -115,11 +114,12 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         ),
       );
 
-  PreferredSizeWidget myAppBar({required Function(bool) toggle}) {
+  PreferredSizeWidget myAppBar(
+      {required Function(bool) toggle, required dynamic model}) {
     return AppBar(
       elevation: 0,
       title: Text(
-        widget.movieModel.title,
+        model['title'],
       ),
       actions: [
         TextButton(
@@ -147,7 +147,9 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       backgroundColor: const Color(0xFFF5F5FA),
       bottomNavigationBar:
           bottomBar(toggle: SeatSelectionController.instance.isSelecation),
-      appBar: myAppBar(toggle: SeatSelectionController.instance.isSelecation),
+      appBar: myAppBar(
+          toggle: SeatSelectionController.instance.isSelecation,
+          model: widget.movieModel),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
