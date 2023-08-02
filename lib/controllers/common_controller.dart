@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class CommonController extends GetxController
     with GetSingleTickerProviderStateMixin {
   static CommonController instance = Get.find();
-  RxList list = MovieController.instance.trendingMovies.value.obs;
+  RxList list = MovieController.instance.trendingMovies;
 
   late TabController tabController;
   late List<Tab> tabs;
@@ -31,6 +31,7 @@ class CommonController extends GetxController
             ))
         .toList();
     screen = screens[0].obs;
+    list = MovieController.instance.trendingMovies;
 
     super.onInit();
   }
@@ -42,14 +43,11 @@ class CommonController extends GetxController
         duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
 
     if (Index == 0) {
-      list.value = MovieController.instance.trendingMovies.value;
-      print(list.value);
+      list = MovieController.instance.trendingMovies;
     } else if (Index == 1) {
-      list.value = MovieController.instance.upComingMovies.value;
-      print(list.value);
+      list = MovieController.instance.upComingMovies;
     } else if (Index == 2) {
-      list.value = MovieController.instance.popularMovies.value;
-      print(list.value);
+      list = MovieController.instance.popularMovies;
     }
   }
 

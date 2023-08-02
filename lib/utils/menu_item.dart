@@ -12,7 +12,7 @@ class MenuItem extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.15,
+      height: size.height * 0.125,
       width: size.width,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

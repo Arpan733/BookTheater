@@ -32,19 +32,19 @@ class ItemBlock extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  "https://image.tmdb.org/t/p/w500${model['poster_path']}",
-                  height: height,
-                  width: width,
-                  fit: BoxFit.cover,
-                ),
-                // Image.network(
-                //   "https://api.themoviedb.org/3/movie/popular?api_key=fb7484d2f4dc9abaadecef9b9133319c" +
-                //       model['poster_path'],
-                //   height: height,
-                //   width: width,
-                //   fit: BoxFit.cover,
-                // ),
+                child: isMovie
+                    ? Image.network(
+                        "https://image.tmdb.org/t/p/w500${model['poster_path']}",
+                        height: height,
+                        width: width,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        model.bannerUrl,
+                        height: height,
+                        width: width,
+                        fit: BoxFit.cover,
+                      ),
               ),
               const SizedBox(
                 height: 8,
@@ -52,7 +52,7 @@ class ItemBlock extends StatelessWidget {
               Container(
                 width: width,
                 child: Text(
-                  model['title'] ?? "",
+                  isMovie ? model['title'] ?? "" : model.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
@@ -81,7 +81,7 @@ class ItemBlock extends StatelessWidget {
                       ],
                     )
                   : Text(
-                      "b",
+                      model.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

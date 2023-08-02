@@ -42,12 +42,14 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
     } else if (menu.name.contains("Plays")) {
       list = plays;
     }
+    CommonController.instance.list = MovieController.instance.trendingMovies;
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(CommonController.instance.list.value);
     return WillPopScope(
       onWillPop: () {
         CommonController.instance.tabController.animateTo(0);

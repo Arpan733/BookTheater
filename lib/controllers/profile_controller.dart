@@ -2,13 +2,22 @@ import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   static ProfileController instance = Get.find();
-  RxBool isEdit = false.obs;
+  RxBool isEditName = false.obs;
+  RxBool isEditMoNumber = false.obs;
 
-  toggleEdit() {
-    if (isEdit.isTrue) {
-      isEdit.toggle();
+  toggleEditName() {
+    if (isEditName.isTrue) {
+      isEditName.toggle();
     } else {
-      isEdit.value = true;
+      isEditName.value = true;
+    }
+  }
+
+  toggleEditMoNumber() {
+    if (isEditMoNumber.isTrue) {
+      isEditMoNumber.toggle();
+    } else {
+      isEditMoNumber.value = true;
     }
   }
 }

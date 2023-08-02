@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../controllers/common_controller.dart';
 import '../utils/event_item.dart';
 import '../utils/play_item.dart';
 
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     MovieController.instance.loadMovies();
+    CommonController.instance.list = MovieController.instance.trendingMovies;
     super.initState();
   }
 
@@ -210,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const MoviesItem(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -252,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 15, right: 20),
+                  padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

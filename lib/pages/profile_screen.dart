@@ -105,7 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                           child: TextFormField(
                             initialValue: name,
                             style: const TextStyle(color: Colors.black),
-                            readOnly: ProfileController.instance.isEdit.value,
+                            readOnly:
+                                ProfileController.instance.isEditName.value,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -126,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               ),
                               suffixIcon: GestureDetector(
                                 onTap: () {
-                                  ProfileController.instance.toggleEdit();
+                                  ProfileController.instance.toggleEditName();
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.all(4),
@@ -185,7 +186,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                           child: TextFormField(
                             initialValue: mobile,
                             style: const TextStyle(color: Colors.black),
-                            readOnly: ProfileController.instance.isEdit.value,
+                            readOnly:
+                                ProfileController.instance.isEditMoNumber.value,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -206,7 +208,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                               ),
                               suffixIcon: GestureDetector(
                                 onTap: () {
-                                  ProfileController.instance.toggleEdit();
+                                  ProfileController.instance
+                                      .toggleEditMoNumber();
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.all(4),

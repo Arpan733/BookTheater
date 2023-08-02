@@ -77,11 +77,11 @@ class AuthController extends GetxController {
 
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+      await googleSignIn.signIn();
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
         final credentials = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken,
@@ -142,4 +142,6 @@ class AuthController extends GetxController {
   void SignOut() async {
     auth.signOut();
   }
+
+  updateName(String name) {}
 }

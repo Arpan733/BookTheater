@@ -23,9 +23,9 @@ void main() async {
       : await Firebase.initializeApp();
   Get.put(AuthController());
   Get.put(LocationController());
-  Get.put(CommonController());
   Get.put(MovieController());
   MovieController.instance.loadMovies();
+  Get.put(CommonController());
 
   runApp(const MyApp());
 }
