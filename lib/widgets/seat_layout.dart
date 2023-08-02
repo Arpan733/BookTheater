@@ -19,9 +19,10 @@ class _SeatLayoutState extends State<SeatLayout> {
   int seatCounter = 0;
   double amount = 0.0;
 
-  Widget mainSeatLayout({required Function(double) seatPrice,
-    required double price,
-    required String rowNo}) {
+  Widget mainSeatLayout(
+      {required Function(double) seatPrice,
+      required double price,
+      required String rowNo}) {
     String seatNo = "$seatCounter";
     return Padding(
       padding: const EdgeInsets.all(5),
@@ -45,23 +46,23 @@ class _SeatLayoutState extends State<SeatLayout> {
             }
           }
 
-          amount = SeatSelectionController.instance.seatPriceList.fold(
-              0, (prev, e) => prev + e);
+          amount = SeatSelectionController.instance.seatPriceList
+              .fold(0, (prev, e) => prev + e);
           seatPrice(amount < 0 ? 0.0 : amount);
         },
         child: Obx(
-              () {
+          () {
             Color backgroundColor = SeatSelectionController
-                .instance.selectedSeats
-                .contains("$rowNo$seatNo")
+                    .instance.selectedSeats
+                    .contains("$rowNo$seatNo")
                 ? Mytheme.greenColor
                 : const Color(0xFFFFFFFF);
             Color borderColor = SeatSelectionController.instance.selectedSeats
-                .contains("$rowNo$seatNo")
+                    .contains("$rowNo$seatNo")
                 ? Mytheme.greenColor
                 : const Color(0xFF707070);
             Color textColor = SeatSelectionController.instance.selectedSeats
-                .contains("$rowNo$seatNo")
+                    .contains("$rowNo$seatNo")
                 ? Colors.white
                 : Colors.black87;
 
@@ -94,6 +95,7 @@ class _SeatLayoutState extends State<SeatLayout> {
 
   @override
   Widget build(BuildContext context) {
+    alphabetCounter = -1;
     int seatLength = widget.model.seatTypes.length;
 
     return Expanded(
@@ -102,10 +104,7 @@ class _SeatLayoutState extends State<SeatLayout> {
           Column(
             children: [
               SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.9,
                 height: 40,
                 child: Image.asset(
                   "assets/images/Screen.png",
@@ -135,9 +134,7 @@ class _SeatLayoutState extends State<SeatLayout> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${widget.model.seatTypes[seatLength - index -
-                                1]['price']} ${widget.model
-                                .seatTypes[seatLength - index - 1]['title']}",
+                            "${widget.model.seatTypes[seatLength - index - 1]['price']} ${widget.model.seatTypes[seatLength - index - 1]['title']}",
                           ),
                           const SizedBox(
                             height: 10,
@@ -148,11 +145,11 @@ class _SeatLayoutState extends State<SeatLayout> {
                               alphabetCounter++;
                               seatCounter = 0;
                               String rowNo =
-                              String.fromCharCode(65 + alphabetCounter);
+                                  String.fromCharCode(65 + alphabetCounter);
                               return Wrap(
                                 children: List.generate(
                                   widget.model.cols + 1,
-                                      (cols) {
+                                  (cols) {
                                     if (cols == 0) {
                                       return Padding(
                                         padding: const EdgeInsets.all(5),
@@ -167,13 +164,13 @@ class _SeatLayoutState extends State<SeatLayout> {
                                     }
 
                                     if ((cols == widget.model.gapColIndex ||
-                                        cols ==
-                                            widget.model.gapColIndex +
-                                                widget.model.gap -
-                                                1) &&
+                                            cols ==
+                                                widget.model.gapColIndex +
+                                                    widget.model.gap -
+                                                    1) &&
                                         (row ==
-                                            widget.model.rowBreaks[index] -
-                                                1 ||
+                                                widget.model.rowBreaks[index] -
+                                                    1 ||
                                             widget.model.isLastFilled)) {
                                       return const Padding(
                                         padding: EdgeInsets.all(5),
@@ -186,8 +183,8 @@ class _SeatLayoutState extends State<SeatLayout> {
 
                                     seatCounter++;
                                     double price = widget.model
-                                        .seatTypes[seatLength - index - 1]
-                                    ['price'];
+                                            .seatTypes[seatLength - index - 1]
+                                        ['price'];
 
                                     return mainSeatLayout(
                                         seatPrice: SeatSelectionController

@@ -78,7 +78,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                     .getErrorSnackBarNew("Please select at least one seat");
                 return;
               }
-              SeatSelectionController.instance.createOrder();
+              SeatSelectionController.instance.createPayment(orderID: "123");
             } else {
               if (SeatSelectionController.instance.noOfSeats.value <= 0) {
                 AuthController.instance

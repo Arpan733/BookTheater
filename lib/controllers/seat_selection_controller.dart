@@ -19,7 +19,7 @@ class SeatSelectionController extends GetxController {
   RxList selectedSeats = [].obs;
   RxDouble seatPrice = 0.0.obs;
   RxList seatPriceList = [].obs;
-  late Razorpay _razorpay;
+  var _razorpay = Razorpay();
   static const String _chars = '1234567890';
   final Random _rnd = Random();
 
@@ -27,6 +27,9 @@ class SeatSelectionController extends GetxController {
   void onInit() {
     noOfSeats = indexValue.obs;
     seatTypes = indexValue.obs;
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.onInit();
   }
 
@@ -90,23 +93,30 @@ class SeatSelectionController extends GetxController {
     );
 
     print(res.body);
-    String orderId = jsonDecode(res.body)["id"];
-    print(orderId);
-    createPayment(orderID: orderId);
+
+    Map<String, dynamic> responseBody = jsonDecode(res.body);
+
+    if (responseBody.containsKey("id")) {
+      String orderId = responseBody["id"];
+      print(orderId);
+      createPayment(orderID: orderId);
+    } else {
+      print("Error: 'id' field not found in the response body.");
+    }
+
+    // String orderId = jsonDecode(res.body)["id"];
+    // print(orderId);
+    // createPayment(orderID: orderId);
   }
 
   void createPayment({required String orderID}) {
     _razorpay = Razorpay();
 
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-
     var options = {
-      'key': Constants.keySecret,
+      'key': Constants.keyId,
       'amount': seatPrice.value * 100.00,
       'name': 'BookTheater',
-      'order_id': orderID,
+      // 'order_id': orderID,
       'description': 'Movie Ticket Amount',
       'timeout': 300,
       'prefill': {
@@ -116,7 +126,12 @@ class SeatSelectionController extends GetxController {
       }
     };
 
-    _razorpay.open(options);
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+      AuthController.instance.getErrorSnackBar("Error: ", e);
+    }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
